@@ -11,5 +11,20 @@ export const POLYGON_MUMBAI = {
   name: 'Polygon Mumbai',
   rpcUrls: { default: 'https://rpc-mumbai.maticvigil.com' }
 };
-// export const CHAIN_ID = POLYGON_MAINNET.id;
-export const CHAIN_ID = POLYGON_MUMBAI.id;
+const IS_MAINNET = process.env.REACT_APP_IS_MAINNET || false;
+export const CHAIN_ID = IS_MAINNET ? POLYGON_MAINNET.id : POLYGON_MUMBAI.id;
+export const BLOCK_EXPLORER = IS_MAINNET ? POLYGON_MAINNET.blockExplorers.etherscan : POLYGON_MUMBAI.blockExplorers.etherscan;
+export const NFT_ADDY = IS_MAINNET ? '0x-' : '0x3Aa33C7d79b69671145337674E9A6233616E07BD';
+export const SAFE_MINT_ABI = {
+  inputs: [
+    {
+      internalType: "uint256",
+      name: "_quantity",
+      type: "uint256"
+    }
+  ],
+  name: "safeMint",
+  outputs: [],
+  stateMutability: "payable",
+  type: "function"
+};

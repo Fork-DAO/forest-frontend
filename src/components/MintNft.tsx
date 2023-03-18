@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import { useState } from "react";
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi";
+import { BLOCK_EXPLORER, NFT_ADDY, SAFE_MINT_ABI } from "../constants";
 
 const MintNft: React.FC = () => {
   const [quantity, setQuantity] = useState("1");
@@ -10,21 +11,9 @@ const MintNft: React.FC = () => {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    address: '0x3Aa33C7d79b69671145337674E9A6233616E07BD',
+    address: NFT_ADDY,
     abi: [
-      {
-        inputs: [
-          {
-            internalType: "uint256",
-            name: "_quantity",
-            type: "uint256"
-          }
-        ],
-        name: "safeMint",
-        outputs: [],
-        stateMutability: "payable",
-        type: "function"
-      }
+      SAFE_MINT_ABI
     ],
     functionName: 'safeMint',
     args: [BigNumber.from(quantity)],
@@ -61,7 +50,7 @@ const MintNft: React.FC = () => {
           <div>
             Successfully minted your NFT!
             <div>
-              <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+              <a href={`${BLOCK_EXPLORER.url}/tx/${data?.hash}`}>Etherscan</a>
             </div>
           </div>)}
         {(isPrepareError || isError) && (
