@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { Dispatch, useEffect, useState } from "react";
 import { Connector, useAccount, useConnect, useDisconnect, useNetwork } from "wagmi";
 import { CHAIN_ID } from "../constants";
@@ -53,17 +53,18 @@ const ConnectWalletButton: React.FC<{
         </div>
       </div>
     ) : (
-      <div className="inline-block transform space-y-3 text-left align-middle">
+      <Stack className="m-2 text-left align-middle" spacing={1}>
         {connectors.map((connector) => {
           return (
             <Button
               variant="outlined"
               color="success"
               type="button"
+              size="small"
               key={connector.id}
               onClick={() => onConnect(connector)}
             >
-              {`Conectar con ${connector.name}`}
+              {`${connector.name}`}
             </Button>
           );
         })}
@@ -74,7 +75,7 @@ const ConnectWalletButton: React.FC<{
             </div>
           ) : null
         }
-      </div >
+      </Stack >
     );
 }
 

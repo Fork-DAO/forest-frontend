@@ -13,7 +13,7 @@ const TreasuryInfo: React.FC = () => {
       setTreasuryAddress(String(data))
     },
     onError(data) {
-      console.log('error reading treasury', data)
+      console.error('error reading treasury', data)
     }
   });
 

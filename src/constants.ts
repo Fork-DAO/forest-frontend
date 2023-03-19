@@ -11,7 +11,8 @@ export const POLYGON_MUMBAI = {
   name: 'Polygon Mumbai',
   rpcUrls: { default: 'https://rpc-mumbai.maticvigil.com' }
 };
-const IS_MAINNET = process.env.REACT_APP_IS_MAINNET || false;
+const IS_MAINNET = process.env.NEXT_PUBLIC_IS_MAINNET || false;
+export const WALLET_CONNECT_PROJECT: string = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT || '';
 export const CHAIN_ID = IS_MAINNET ? POLYGON_MAINNET.id : POLYGON_MUMBAI.id;
 export const CHAIN_NAME = IS_MAINNET ? POLYGON_MAINNET.name : POLYGON_MUMBAI.name;
 export const BLOCK_EXPLORER = IS_MAINNET ? POLYGON_MAINNET.blockExplorers.etherscan : POLYGON_MUMBAI.blockExplorers.etherscan;

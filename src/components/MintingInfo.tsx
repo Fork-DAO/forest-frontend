@@ -17,7 +17,7 @@ const MintingInfo: React.FC<{
       setBalance(BigNumber.from(data))
     },
     onError(data) {
-      console.log('error reading balance', data)
+      console.error('error reading balance', data)
     }
   });
 
