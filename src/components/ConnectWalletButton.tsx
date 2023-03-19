@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Button, Stack } from "@mui/material";
 import { Dispatch, useEffect, useState } from "react";
 import { Connector, useAccount, useConnect, useDisconnect, useNetwork } from "wagmi";
-import { CHAIN_ID } from "../constants";
+import { CHAIN_ID, CHAIN_NAME } from "../constants";
 import SwitchNetwork from "./SwitchNetwork";
 
 const ConnectWalletButton: React.FC<{
@@ -28,6 +28,8 @@ const ConnectWalletButton: React.FC<{
       console.error(error);
     }
   };
+
+  console.log(`chain ${CHAIN_ID} ${CHAIN_NAME}`)
 
   return loading ?
     <div>Loading ...</div> :
