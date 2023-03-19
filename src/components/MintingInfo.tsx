@@ -21,11 +21,11 @@ const MintingInfo: React.FC<{
     }
   });
 
-  return (
+  return balance && balance.gt(0) ? (
     <div>
-      {`Ya minteaste ${balance} Nft. Gracias!`}
+      {`Ya minteaste ${balance} NFT. Gracias!`}
     </div>
-  )
+  ) : null;
 }
 
 export default MintingInfo;

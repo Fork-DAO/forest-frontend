@@ -13,8 +13,10 @@ export const POLYGON_MUMBAI = {
 };
 const IS_MAINNET = process.env.REACT_APP_IS_MAINNET || false;
 export const CHAIN_ID = IS_MAINNET ? POLYGON_MAINNET.id : POLYGON_MUMBAI.id;
+export const CHAIN_NAME = IS_MAINNET ? POLYGON_MAINNET.name : POLYGON_MUMBAI.name;
 export const BLOCK_EXPLORER = IS_MAINNET ? POLYGON_MAINNET.blockExplorers.etherscan : POLYGON_MUMBAI.blockExplorers.etherscan;
-export const NFT_ADDY = IS_MAINNET ? '0x-' : '0x3Aa33C7d79b69671145337674E9A6233616E07BD';
+export const NFT_ADDY = IS_MAINNET ? '0x-' : '0xA5E18B96D8afC69637b9800Ff50ad16C65A6Df23';
+export const MAX_SUPPLY = 10;
 export const WRITE_SAFE_MINT = {
   abi: {
     inputs: [

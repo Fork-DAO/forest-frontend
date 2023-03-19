@@ -1,8 +1,9 @@
+import styled from "@emotion/styled";
+import { Button } from "@mui/material";
 import { Dispatch, useEffect, useState } from "react";
 import { Connector, useAccount, useConnect, useDisconnect, useNetwork } from "wagmi";
 import { CHAIN_ID } from "../constants";
 import SwitchNetwork from "./SwitchNetwork";
-
 
 const ConnectWalletButton: React.FC<{
   setHasConnected: Dispatch<boolean>
@@ -31,41 +32,49 @@ const ConnectWalletButton: React.FC<{
   return loading ?
     <div>Loading ...</div> :
     activeConnector?.id ? (
-      <div className="space-y-2.5">
+      <div>
         <div>
           {chain?.id !== CHAIN_ID ?
             <SwitchNetwork /> :
-            <div>
-              {address || ""}
-              <button
-                onClick={() => disconnect?.()}
-                className="flex items-center space-x-1 text-sm underline"
-              >
-                Desconectar.
-              </button>
+            <div className="grid grid-col-1 place-items-end">
+              <div>
+                {address || ""}
+              </div>
+              <div>
+                <button
+                  onClick={() => disconnect?.()}
+                  className="space-x-1 text-sm underline"
+                >
+                  Desconectar
+                </button>
+              </div>
             </div>}
 
         </div>
       </div>
     ) : (
-      <div className="inline-block transform space-y-3 overflow-hidden text-left align-middle transition-all">
+      <div className="inline-block transform space-y-3 text-left align-middle">
         {connectors.map((connector) => {
           return (
-            <button
+            <Button
+              variant="outlined"
+              color="success"
               type="button"
               key={connector.id}
               onClick={() => onConnect(connector)}
             >
               {`Conectar con ${connector.name}`}
-            </button>
+            </Button>
           );
         })}
-        {error?.message ? (
-          <div className="flex items-center space-x-1 text-red-500">
-            <div>{error?.message ?? `Failed to connect`}</div>
-          </div>
-        ) : null}
-      </div>
+        {
+          error?.message ? (
+            <div className="flex items-center space-x-1 text-red-500">
+              <div>{error?.message ?? `Failed to connect`}</div>
+            </div>
+          ) : null
+        }
+      </div >
     );
 }
 

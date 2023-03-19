@@ -1,3 +1,4 @@
+import { Stack } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import Layout from '../components/Layout';
@@ -16,17 +17,20 @@ const Index = () => {
 
   return (
     <Layout setHasConnected={setHasConnected}>
-      <div className="flex flex-col justify-center items-center">
-        {(hasConnected || address) && !loading ?
-          <div>
-            <TreasuryInfo />
-            <MintingInfo userAddress={address!} />
-            <MintNft />
-          </div>
-          :
-          "Please, connect wallet."}
-
-      </div>
+      {(hasConnected || address) && !loading ?
+        <Stack
+          className="flex justify-self-auto items-center"
+          spacing={{ xs: 1, sm: 1, md: 4 }}
+        >
+          <MintNft />
+          <TreasuryInfo />
+          <MintingInfo userAddress={address!} />
+        </Stack>
+        :
+        <Stack className="flex justify-self-auto items-center">
+          Por favor, conectar billetera..
+        </Stack>
+      }
 
     </Layout>)
 }
