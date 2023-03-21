@@ -1,7 +1,8 @@
 import { Button, Stack } from "@mui/material";
 import { Dispatch, useEffect, useState } from "react";
-import { Connector, useAccount, useConnect, useDisconnect, useNetwork } from "wagmi";
+import { Connector, useAccount, useConnect, useDisconnect, useEnsName, useNetwork } from "wagmi";
 import { CHAIN_ID } from "../constants";
+import AccountENS from "./AccountENS";
 import SwitchNetwork from "./SwitchNetwork";
 
 const ConnectWalletButton: React.FC<{
@@ -11,7 +12,12 @@ const ConnectWalletButton: React.FC<{
   const { connectors, error, connectAsync } = useConnect({ chainId: CHAIN_ID })
   const { disconnect } = useDisconnect();
   const { address, connector: activeConnector } = useAccount();
+  const {
+    data: ens,
+    isError: isErrorENS,
+    isLoading: isLoadingENS } = useEnsName({ address: address || '0x0', chainId: 1 });
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     setLoading(false);
@@ -36,9 +42,7 @@ const ConnectWalletButton: React.FC<{
           {chain?.id !== CHAIN_ID ?
             <SwitchNetwork /> :
             <div className="grid grid-col-1 place-items-end">
-              <div>
-                {address || ""}
-              </div>
+              {address ? <AccountENS address={address} /> : ""}
               <div>
                 <button
                   onClick={() => disconnect?.()}

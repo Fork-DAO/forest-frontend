@@ -1,14 +1,14 @@
 import '../styles/globals.css';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-import { polygon, polygonMumbai } from 'wagmi/chains';
+import { mainnet, polygon, polygonMumbai } from 'wagmi/chains';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import type { AppProps } from 'next/app'
 import { WALLET_CONNECT_PROJECT } from '../constants';
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [polygon, polygonMumbai],
+  [mainnet, polygon, polygonMumbai],
   [publicProvider()]
 );
 
