@@ -5,14 +5,13 @@ import image from "../../public/background.png";
 
 const Layout: React.FC<{
   children: ReactNode,
-  setHasConnected: Dispatch<boolean>
-}> = ({ children, setHasConnected }) => {
+  setHasConnected: Dispatch<boolean>,
+  isMobile: boolean
+}> = ({ children, setHasConnected, isMobile }) => {
   const [windowDefined, setWindowDefined] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setWindowDefined(true);
-    setIsMobile(window.innerWidth < 769);
   }, []);
 
   return (
@@ -25,13 +24,13 @@ const Layout: React.FC<{
         backgroundImage: `url(${image.src})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        backgroundPosition: false ? "left" : "top",
+        backgroundPosition: isMobile ? "left" : "top",
         maxHeight: '100%',
         height: '100%',
         maxWidth: '100%',
         width: '100%',
       } : {}}>
-        <Header setHasConnected={setHasConnected} />
+        <Header setHasConnected={setHasConnected} isMobile={isMobile} />
         <div className="pt-20">
           {children}
         </div>

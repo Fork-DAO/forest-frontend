@@ -1,23 +1,19 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Card, Stack, Typography } from "@mui/material";
 import { Dispatch, useEffect, useState } from "react";
-import { Connector, useAccount, useConnect, useDisconnect, useEnsName, useNetwork } from "wagmi";
+import { Connector, useAccount, useConnect, useDisconnect, useNetwork } from "wagmi";
 import { CHAIN_ID } from "../constants";
 import AccountENS from "./AccountENS";
 import SwitchNetwork from "./SwitchNetwork";
 
 const ConnectWalletButton: React.FC<{
-  setHasConnected: Dispatch<boolean>
-}> = ({ setHasConnected }) => {
+  setHasConnected: Dispatch<boolean>,
+  isMobile: boolean
+}> = ({ setHasConnected, isMobile }) => {
   const { chain } = useNetwork();
   const { connectors, error, connectAsync } = useConnect({ chainId: CHAIN_ID })
   const { disconnect } = useDisconnect();
   const { address, connector: activeConnector } = useAccount();
-  const {
-    data: ens,
-    isError: isErrorENS,
-    isLoading: isLoadingENS } = useEnsName({ address: address || '0x0', chainId: 1 });
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     setLoading(false);
@@ -41,16 +37,15 @@ const ConnectWalletButton: React.FC<{
         <div>
           {chain?.id !== CHAIN_ID ?
             <SwitchNetwork /> :
-            <div className="grid grid-col-1 place-items-end">
+            <div className="grid grid-col-1 place-items-end space-x-1 space-y-1 m-4 text-sm">
               {address ? <AccountENS address={address} /> : ""}
-              <div>
-                <button
-                  onClick={() => disconnect?.()}
-                  className="space-x-1 text-sm underline"
-                >
-                  Desconectar
+              <Card className="p-1" style={{ background: "rgb(67 103 110)" }}>
+                <button onClick={() => disconnect?.()}>
+                  <Typography variant="body2" color="#cdd8c4" >
+                    Desconectar
+                  </Typography>
                 </button>
-              </div>
+              </Card>
             </div>}
 
         </div>
@@ -60,14 +55,14 @@ const ConnectWalletButton: React.FC<{
         {connectors.map((connector) => {
           return (
             <Button
-              variant="outlined"
-              color="success"
               type="button"
-              size="small"
               key={connector.id}
               onClick={() => onConnect(connector)}
+              style={{ background: "rgb(67 103 110)" }}
             >
-              {`${connector.name}`}
+              <Typography color="#cdd8c4">
+                {`${connector.name}`}
+              </Typography>
             </Button>
           );
         })}

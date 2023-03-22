@@ -10,13 +10,18 @@ const Index = () => {
   const { address } = useAccount();
   const [hasConnected, setHasConnected] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setLoading(false);
   }, [address]);
 
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 769);
+  }, []);
+
   return (
-    <Layout setHasConnected={setHasConnected}>
+    <Layout setHasConnected={setHasConnected} isMobile={isMobile}>
       {(hasConnected || address) && !loading ?
         <Stack
           className="flex justify-self-auto items-center"
