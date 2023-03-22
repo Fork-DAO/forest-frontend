@@ -1,5 +1,9 @@
 import { useEnsName } from "wagmi";
 
+const shortenAddress = (address: `0x${string}`) => {
+  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
+};
+
 const AccountENS: React.FC<{
   address: `0x${string}`
 }> = ({ address }) => {
@@ -9,7 +13,7 @@ const AccountENS: React.FC<{
     isLoading: isLoadingENS } = useEnsName({ address: address, chainId: 1 });
 
   return <div>
-    {(isErrorENS || !ens || isLoadingENS) ? address : ens}
+    {(isErrorENS || !ens || isLoadingENS) ? shortenAddress(address) : ens}
   </div>
 }
 
