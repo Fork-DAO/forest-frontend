@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import Layout from '../components/Layout';
@@ -29,11 +29,15 @@ const Index = () => {
         >
           <MintNft />
           <TreasuryInfo />
-          <MintingInfo userAddress={address!} />
+          {/* <MintingInfo userAddress={address!} /> */}
         </Stack>
         :
-        <Stack className="flex justify-self-auto items-center">
-          Por favor, conectar billetera..
+        <Stack
+          className="flex justify-self-auto items-center"
+          spacing={{ xs: 1, sm: 1, md: 4 }}>
+          <Typography color="#dfebd5" variant="h6">
+            {"Por favor, conectar billetera para empezar."}
+          </Typography>
         </Stack>
       }
 

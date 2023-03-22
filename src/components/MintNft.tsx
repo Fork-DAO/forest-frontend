@@ -1,9 +1,31 @@
+import styled from "@emotion/styled";
 import { OpenInNew } from "@mui/icons-material";
-import { Alert, AlertTitle, Button, CircularProgress, Collapse, IconButton, Link, Stack, TextField, Tooltip } from "@mui/material";
+import { Alert, Button, CircularProgress, Collapse, IconButton, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { BigNumber, ethers } from "ethers";
 import { useState } from "react";
 import { useContractRead, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi";
-import { BLOCK_EXPLORER, NFT_ADDY, WRITE_SAFE_MINT, READ_UNIT_PRICE, MAX_SUPPLY } from "../constants";
+import { BLOCK_EXPLORER, NFT_ADDY, WRITE_SAFE_MINT, READ_UNIT_PRICE } from "../constants";
+
+const QuantityTextField = styled(TextField)({
+  'background-color': '#43676e52',
+  '#quantity': {
+    color: '#cdd8c4'
+  },
+  '& input:invalid + fieldset': {
+    borderColor: 'red',
+    borderWidth: 2,
+  },
+  '& input:valid:focus + fieldset': {
+    borderColor: "rgb(67 103 110)",
+    borderLeftWidth: 6,
+    padding: '4px !important',
+  },
+  '& input:valid:hover + fieldset': {
+    borderColor: "rgb(67 103 110)",
+    borderLeftWidth: 6,
+    padding: '4px !important',
+  }
+});
 
 const MintNft: React.FC = () => {
   const [quantity, setQuantity] = useState<number>();
@@ -50,9 +72,8 @@ const MintNft: React.FC = () => {
   return (
     <Stack className="flex items-center" >
       <div>
-        <TextField
-          id="outlined-basic"
-          label={(quantity || 0) > 0 ? "" : "Cantidad"}
+        <QuantityTextField
+          id="quantity"
           variant="outlined"
           onChange={(e) => setQuantity(Number(e.target.value))}
           type="number"
@@ -64,15 +85,17 @@ const MintNft: React.FC = () => {
           <Tooltip title={unitPrice && quantity ? `Total ${ethers.utils.formatEther(unitPrice.mul(quantity))} MATIC` : ""}>
             <Button
               variant="outlined"
-              color="success"
               size="large"
               disabled={!quantity || !unitPrice || isLoading}
               onClick={(e) => {
                 e.preventDefault()
                 write?.()
               }}
+              style={{ background: "rgb(67 103 110)" }}
             >
-              Mintear
+              <Typography color="#cdd8c4">
+                Mintear
+              </Typography>
             </Button>
           </Tooltip>
         }
