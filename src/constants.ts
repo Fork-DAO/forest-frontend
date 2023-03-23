@@ -17,8 +17,7 @@ export const WALLET_CONNECT_PROJECT: string = process.env.NEXT_PUBLIC_WALLET_CON
 export const CHAIN_ID = IS_MAINNET ? POLYGON_MAINNET.id : POLYGON_MUMBAI.id;
 export const CHAIN_NAME = IS_MAINNET ? POLYGON_MAINNET.name : POLYGON_MUMBAI.name;
 export const BLOCK_EXPLORER = IS_MAINNET ? POLYGON_MAINNET.blockExplorers.etherscan : POLYGON_MUMBAI.blockExplorers.etherscan;
-export const NFT_ADDY = IS_MAINNET ? '0x-' : '0xA5E18B96D8afC69637b9800Ff50ad16C65A6Df23';
-export const MAX_SUPPLY = 10;
+export const NFT_ADDY = IS_MAINNET ? '0x-' : '0x87BBFf28676eA3089dDd7579fE10e79D530f2b50';
 export const WRITE_SAFE_MINT = {
   abi: {
     inputs: [

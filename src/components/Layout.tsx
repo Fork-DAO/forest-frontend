@@ -17,7 +17,7 @@ const Layout: React.FC<{
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <Head>
-        <title>🌳Fork Forest🌳</title>
+        <title>{"🌳 Fork Forest 🌳"}</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div style={windowDefined ? {
