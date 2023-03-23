@@ -16,6 +16,7 @@ const Header: React.FC<{
         alt=""
         width="200"
         height="80"
+        className="m-4"
       />
       <ConnectWalletButton setHasConnected={setHasConnected} isMobile={isMobile} />
     </nav>
