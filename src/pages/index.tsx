@@ -4,6 +4,7 @@ import { useAccount } from 'wagmi';
 import Layout from '../components/Layout';
 import MintingInfo from '../components/MintingInfo';
 import MintNft from '../components/MintNft';
+import TestnetDisclaimer from '../components/TestnetDisclaimer';
 import TreasuryInfo from '../components/TreasuryInfo';
 
 const Index = () => {
@@ -29,6 +30,7 @@ const Index = () => {
         >
           <MintNft />
           <TreasuryInfo />
+          <TestnetDisclaimer />
           {/* <MintingInfo userAddress={address!} /> */}
         </Stack>
         :
