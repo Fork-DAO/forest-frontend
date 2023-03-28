@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Card, Stack, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import Layout from '../components/Layout';
@@ -38,9 +38,11 @@ const Index = () => {
         <Stack
           className="flex justify-center content-baseline items-center"
           spacing={{ xs: 1, sm: 1, md: 4 }}>
-          <Typography color="#dfebd5" variant="h6" style={{ textAlign: "center" }}>
-            {"Por favor, conectar billetera para empezar."}
-          </Typography>
+          <Card className="p-1" style={{ background: "rgb(67 103 110 / 69%)" }}>
+            <Typography color="#dfebd5" variant="h6" style={{ textAlign: "center" }}>
+              {"Por favor, conectar billetera para empezar."}
+            </Typography>
+          </Card>
         </Stack>
       }
 
