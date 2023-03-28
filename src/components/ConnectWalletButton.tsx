@@ -7,8 +7,7 @@ import SwitchNetwork from "./SwitchNetwork";
 
 const ConnectWalletButton: React.FC<{
   setHasConnected: Dispatch<boolean>,
-  isMobile: boolean
-}> = ({ setHasConnected, isMobile }) => {
+}> = ({ setHasConnected }) => {
   const { chain } = useNetwork();
   const { connectors, error, connectAsync } = useConnect({ chainId: CHAIN_ID })
   const { disconnect } = useDisconnect();
@@ -38,10 +37,10 @@ const ConnectWalletButton: React.FC<{
           {chain?.id !== CHAIN_ID ?
             <SwitchNetwork /> :
             <div className="grid grid-col-1 place-items-end space-x-1 space-y-1 m-4 text-sm">
-              {address ? <AccountENS address={address} /> : ""}
+              {address ? <AccountENS address={address} isMobile={false} /> : ""}
               <Card className="p-1" style={{ background: "rgb(67 103 110)" }}>
                 <button onClick={() => disconnect?.()}>
-                  <Typography variant="body2" color="#cdd8c4" >
+                  <Typography className="underline" variant="body2" color="#cdd8c4" style={{ fontSize: "small" }}>
                     Desconectar
                   </Typography>
                 </button>

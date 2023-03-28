@@ -18,7 +18,7 @@ const Index = () => {
   }, [address]);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 769);
+    setIsMobile(window.innerWidth < 400);
   }, []);
 
   return (
@@ -35,9 +35,9 @@ const Index = () => {
         </Stack>
         :
         <Stack
-          className="flex justify-self-auto items-center"
+          className="flex justify-center content-baseline items-center"
           spacing={{ xs: 1, sm: 1, md: 4 }}>
-          <Typography color="#dfebd5" variant="h6">
+          <Typography color="#dfebd5" variant="h6" style={{ textAlign: "center" }}>
             {"Por favor, conectar billetera para empezar."}
           </Typography>
         </Stack>

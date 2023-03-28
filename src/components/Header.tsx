@@ -3,9 +3,8 @@ import { Dispatch } from "react";
 import ConnectWalletButton from "./ConnectWalletButton";
 
 const Header: React.FC<{
-  setHasConnected: Dispatch<boolean>,
-  isMobile: boolean
-}> = ({ setHasConnected, isMobile }) => {
+  setHasConnected: Dispatch<boolean>
+}> = ({ setHasConnected }) => {
   return (
     <nav
       className="border-b-2 ml-2 mr-2 flex flex-row justify-between content-baseline items-center"
@@ -18,7 +17,7 @@ const Header: React.FC<{
         height="80"
         className="m-4"
       />
-      <ConnectWalletButton setHasConnected={setHasConnected} isMobile={isMobile} />
+      <ConnectWalletButton setHasConnected={setHasConnected} />
     </nav>
   );
 }

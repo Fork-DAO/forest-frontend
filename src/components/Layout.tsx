@@ -2,6 +2,7 @@ import Head from "next/head";
 import React, { Dispatch, ReactNode, useEffect, useState } from "react";
 import Header from "./Header";
 import image from "../../public/background.png";
+import HeaderMobile from "./HeaderMobile";
 
 const Layout: React.FC<{
   children: ReactNode,
@@ -30,7 +31,10 @@ const Layout: React.FC<{
         maxWidth: '100%',
         width: '100%',
       } : {}}>
-        <Header setHasConnected={setHasConnected} isMobile={isMobile} />
+        {isMobile ?
+          <HeaderMobile setHasConnected={setHasConnected} /> :
+          <Header setHasConnected={setHasConnected} />
+        }
         <div className="pt-20">
           {children}
         </div>
