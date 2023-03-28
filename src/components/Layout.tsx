@@ -35,7 +35,7 @@ const Layout: React.FC<{
           <HeaderMobile setHasConnected={setHasConnected} /> :
           <Header setHasConnected={setHasConnected} />
         }
-        <div className="pt-20">
+        <div className={isMobile ? "pt-10" : "pt-20"}>
           {children}
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useAccount } from 'wagmi';
 import Layout from '../components/Layout';
 import MintingInfo from '../components/MintingInfo';
 import MintNft from '../components/MintNft';
+import MintNftMobile from '../components/MintNftMobile';
 import TestnetDisclaimer from '../components/TestnetDisclaimer';
 import TreasuryInfo from '../components/TreasuryInfo';
 
@@ -28,10 +29,10 @@ const Index = () => {
           className="flex justify-self-auto items-center"
           spacing={{ xs: 1, sm: 1, md: 4 }}
         >
-          <MintNft />
+          {isMobile ? <TestnetDisclaimer /> : <></>}
+          {isMobile ? <MintNftMobile /> : <MintNft />}
           <TreasuryInfo />
-          <TestnetDisclaimer />
-          {/* <MintingInfo userAddress={address!} /> */}
+          {isMobile ? <></> : <TestnetDisclaimer />}
         </Stack>
         :
         <Stack
