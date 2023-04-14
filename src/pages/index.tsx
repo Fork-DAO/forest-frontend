@@ -42,6 +42,7 @@ const Index = () => {
             <Typography color="#cdd8c4" variant="h6" style={{ textAlign: "center" }}>
               {"Por favor, conectar billetera para empezar."}
             </Typography>
+
           </Card>
         </Stack>
       }
