@@ -43,14 +43,17 @@ const ConnectWalletButtonMobile: React.FC<{
           (
             <Stack className="pt-2">
               {address ? <AccountENS address={address} isMobile={true} /> : ""}
+
               <Button onClick={() => disconnect?.()}>
-                <Typography
-                  variant="body2"
-                  color="#cdd8c4"
-                  className="underline"
-                  style={{ fontSize: "xx-small" }}>
-                  Desconectar
-                </Typography>
+                <Card className="p-1" style={{ background: "rgb(67 103 110)" }}>
+                  <Typography
+                    variant="body2"
+                    color="#cdd8c4"
+                    className="underline"
+                    style={{ fontSize: "xx-small" }}>
+                    Desconectar
+                  </Typography>
+                </Card>
               </Button>
             </Stack>)
         }

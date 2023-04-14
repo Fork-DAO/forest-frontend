@@ -2,11 +2,11 @@ import { Card, Stack, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import Layout from '../components/Layout';
-import MintingInfo from '../components/MintingInfo';
 import MintNft from '../components/MintNft';
 import MintNftMobile from '../components/MintNftMobile';
 import TestnetDisclaimer from '../components/TestnetDisclaimer';
 import TreasuryInfo from '../components/TreasuryInfo';
+import { IS_MAINNET } from '../constants';
 
 const Index = () => {
   const { address } = useAccount();
@@ -29,17 +29,17 @@ const Index = () => {
           className="flex justify-self-auto items-center"
           spacing={{ xs: 1, sm: 1, md: 4 }}
         >
-          {isMobile ? <TestnetDisclaimer /> : <></>}
+          {!isMobile && !IS_MAINNET ? <TestnetDisclaimer /> : <></>}
           {isMobile ? <MintNftMobile /> : <MintNft />}
           <TreasuryInfo />
-          {isMobile ? <></> : <TestnetDisclaimer />}
+          {isMobile && !IS_MAINNET ? <TestnetDisclaimer /> : <></>}
         </Stack>
         :
         <Stack
           className="flex justify-center content-baseline items-center"
           spacing={{ xs: 1, sm: 1, md: 4 }}>
           <Card className="p-1" style={{ background: "rgb(67 103 110 / 69%)" }}>
-            <Typography color="#dfebd5" variant="h6" style={{ textAlign: "center" }}>
+            <Typography color="#cdd8c4" variant="h6" style={{ textAlign: "center" }}>
               {"Por favor, conectar billetera para empezar."}
             </Typography>
           </Card>

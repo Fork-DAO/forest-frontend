@@ -12,12 +12,12 @@ export const POLYGON_MUMBAI = {
   rpcUrls: { default: 'https://rpc-mumbai.maticvigil.com' }
 };
 
-const IS_MAINNET = (process.env.NEXT_PUBLIC_IS_MAINNET || "false") == "true";
+export const IS_MAINNET = (process.env.NEXT_PUBLIC_IS_MAINNET || "false") == "true";
 export const WALLET_CONNECT_PROJECT: string = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT || '';
 export const CHAIN_ID = IS_MAINNET ? POLYGON_MAINNET.id : POLYGON_MUMBAI.id;
 export const CHAIN_NAME = IS_MAINNET ? POLYGON_MAINNET.name : POLYGON_MUMBAI.name;
 export const BLOCK_EXPLORER = IS_MAINNET ? POLYGON_MAINNET.blockExplorers.etherscan : POLYGON_MUMBAI.blockExplorers.etherscan;
-export const NFT_ADDY = IS_MAINNET ? '0x-' : '0x87BBFf28676eA3089dDd7579fE10e79D530f2b50';
+export const NFT_ADDY = IS_MAINNET ? '0xB821eCB2d15F4462869d45f13702B62ad1ceFA01' : '0x42FCcA2A57976378DBFaF853a3089547b599f98F';
 export const WRITE_SAFE_MINT = {
   abi: {
     inputs: [
