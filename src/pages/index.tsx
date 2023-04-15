@@ -4,6 +4,7 @@ import { useAccount } from 'wagmi';
 import Layout from '../components/Layout';
 import MintNft from '../components/MintNft';
 import MintNftMobile from '../components/MintNftMobile';
+import SoldOutDisclaimer from '../components/SoldOutDisclaimer';
 import TestnetDisclaimer from '../components/TestnetDisclaimer';
 import TreasuryInfo from '../components/TreasuryInfo';
 import { IS_MAINNET } from '../constants';
@@ -29,6 +30,7 @@ const Index = () => {
           className="flex justify-self-auto items-center"
           spacing={{ xs: 1, sm: 1, md: 4 }}
         >
+          <SoldOutDisclaimer />
           {!isMobile && !IS_MAINNET ? <TestnetDisclaimer /> : <></>}
           {isMobile ? <MintNftMobile /> : <MintNft />}
           <TreasuryInfo />

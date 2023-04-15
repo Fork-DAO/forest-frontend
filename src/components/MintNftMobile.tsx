@@ -71,33 +71,7 @@ const MintNftMobile: React.FC = () => {
 
   return (
     <Stack className="flex items-center" spacing={1}>
-      <QuantityTextField
-        id="quantity"
-        variant="outlined"
-        onChange={(e) => setQuantity(Number(e.target.value))}
-        type="number"
-        value={quantity}
-        size="small"
-        disabled={isLoading}
-      />
-      {isLoading ? <CircularProgress className="ml-2" /> :
-        <Tooltip title={unitPrice && quantity ? `Total ${ethers.utils.formatEther(unitPrice.mul(quantity))} MATIC` : ""}>
-          <Button
-            variant="outlined"
-            size="large"
-            disabled={!quantity || !unitPrice || isLoading}
-            onClick={(e) => {
-              e.preventDefault()
-              write?.()
-            }}
-            style={{ background: "rgb(67 103 110)" }}
-          >
-            <Typography color="#cdd8c4">
-              Mintear
-            </Typography>
-          </Button>
-        </Tooltip>
-      }
+
       {isSuccess && (
         <Collapse in={showSuccess}>
           <Alert
