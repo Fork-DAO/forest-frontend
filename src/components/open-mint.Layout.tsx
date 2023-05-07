@@ -1,8 +1,8 @@
 import Head from "next/head";
 import React, { Dispatch, ReactNode, useEffect, useState } from "react";
-import Header from "./Header";
+import Header from "./open-mint.Header";
 import image from "../../public/background.png";
-import HeaderMobile from "./HeaderMobile";
+import HeaderMobile from "./open-mint.HeaderMobile";
 
 const Layout: React.FC<{
   children: ReactNode,

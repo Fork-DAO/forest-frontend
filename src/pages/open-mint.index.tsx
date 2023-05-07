@@ -1,7 +1,7 @@
 import { Card, Stack, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import Layout from '../components/Layout';
+import Layout from '../components/open-mint.Layout';
 import MintNft from '../components/MintNft';
 import MintNftMobile from '../components/MintNftMobile';
 import SoldOutDisclaimer from '../components/SoldOutDisclaimer';
