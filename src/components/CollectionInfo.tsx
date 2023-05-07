@@ -38,6 +38,10 @@ const CollectionInfo: React.FC = () => {
             - Twitter de Fork DAO <a target="_blank" rel="noreferrer" href={'https://twitter.com/ForkDAOes'}>
               <OpenInNew fontSize="inherit" /></a>
           </p>
+          <p>
+            - Tópico REFI en el Telegram de Fork DAO <a target="_blank" rel="noreferrer" href={'https://t.me/forkdaoes/25325'}>
+              <OpenInNew fontSize="inherit" /></a>
+          </p>
         </Typography>
       </Card>
     </div>
