@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import twitterLogo from '@/assets/twitter-logo.svg';
 import lenster from '@/assets/link-lenster.svg';
@@ -46,6 +49,25 @@ const icons = [
   { icon: github, alt: 'Github Logo', href: 'https://github.com/Fork-DAO', className: 'w-[30px]' },
   { icon: ekoToken, alt: 'EkoToken Logo', href: 'https://ekonavi.com/organizacao-social/fork-forest', className: '' },
 ];
+
+const API_KEY = process.env.NEXT_PUBLIC_GC_API_KEY;
+const SCORER_ID = process.env.NEXT_PUBLIC_GC_SCORER_ID;
+
+const SUBMIT_PASSPORT_URI = 'https://api.scorer.gitcoin.co/registry/submit-passport';
+const SIGNIN_MESSAGE_URI = 'https://api.scorer.gitcoin.co/registry/signing-message';
+
+const headers = API_KEY
+  ? {
+      'Content-Type': 'application/json',
+      'X-API-KEY': API_KEY,
+    }
+  : undefined;
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 export default function Home() {
   return (
