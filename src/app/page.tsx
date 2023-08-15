@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <>
       <main className='relative mx-[10vw] flex-1'>
-        <Image src={forestLogo} alt='Fork Fores Logo' className='mx-auto min-w-[160px] pt-10' />
+        <Image src={forestLogo} alt='Fork Fores Logo' className='mx-auto min-w-[160px] pt-5 md:pt-10' />
         <p className='mt-8 text-center leading-[22px] md:mx-auto md:w-[70%] md:text-[22px]'>
           Es un proyecto ReFi que trabaja con herramientas web3 al servicio de los valores de conservación ambiental y
           responsabilidad social, además de promover la participación de la comunidad local en la restauración del medio
@@ -60,7 +60,7 @@ export default function Home() {
           <Link
             target='_blank'
             href='https://passport.gitcoin.co/#/'
-            className='w-full rounded-[50px] border border-black py-2 text-center'
+            className='w-full rounded-[50px] border border-black py-2 text-center md:w-1/2'
           >
             <p>Tu Gitcoin passport</p>
             <p className='text-xs'>{'(Necesitas 20 puntos para multiplicar tu donación)'}</p>

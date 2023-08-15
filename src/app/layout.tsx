@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         {children}
       </body> */}
-      <body className='flex min-h-[100vh] flex-col'>{children}</body>
+      <body className='flex min-h-[100svh] flex-col'>{children}</body>
     </html>
   );
 }
