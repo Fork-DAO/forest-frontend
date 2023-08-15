@@ -62,7 +62,7 @@ export default function Home() {
             href='https://passport.gitcoin.co/#/'
             className='w-full rounded-[50px] border border-black py-2 text-center'
           >
-            <p>Tu Gitcoin passpor</p>
+            <p>Tu Gitcoin passport</p>
             <p className='text-xs'>{'(Necesitas 20 puntos para multiplicar tu donación)'}</p>
           </Link>
         </div>
