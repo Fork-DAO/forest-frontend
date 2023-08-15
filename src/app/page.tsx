@@ -30,7 +30,12 @@ const links = [
 ];
 
 const icons = [
-  { icon: twitterLogo, alt: 'Twitter Icon', href: 'https://twitter.com/ForkDAOes', className: '' },
+  {
+    icon: twitterLogo,
+    alt: 'Twitter Icon',
+    href: 'https://twitter.com/ForkForest?t=tzFGGYP3Qie3eCcTOkpaeQ&s=09',
+    className: '',
+  },
   {
     icon: gainforestLogo,
     alt: 'Gainforest Logo',
@@ -39,7 +44,7 @@ const icons = [
   },
   { icon: lenster, alt: 'Lenster Logo', href: 'https://lenster.xyz/u/forkdao', className: '' },
   { icon: github, alt: 'Github Logo', href: 'https://github.com/Fork-DAO', className: 'w-[30px]' },
-  { icon: ekoToken, alt: 'EkoToken Logo', href: '', className: '' },
+  { icon: ekoToken, alt: 'EkoToken Logo', href: '', className: 'https://ekonavi.com/organizacao-social/fork-forest' },
 ];
 
 export default function Home() {
