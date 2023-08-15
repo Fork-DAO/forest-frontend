@@ -44,7 +44,7 @@ const icons = [
   },
   { icon: lenster, alt: 'Lenster Logo', href: 'https://lenster.xyz/u/forkdao', className: '' },
   { icon: github, alt: 'Github Logo', href: 'https://github.com/Fork-DAO', className: 'w-[30px]' },
-  { icon: ekoToken, alt: 'EkoToken Logo', href: '', className: 'https://ekonavi.com/organizacao-social/fork-forest' },
+  { icon: ekoToken, alt: 'EkoToken Logo', href: 'https://ekonavi.com/organizacao-social/fork-forest', className: '' },
 ];
 
 export default function Home() {
