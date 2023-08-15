@@ -18,10 +18,11 @@ const raleway = Raleway({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='es' className={raleway.className}>
-      <body>
+      {/* <body>
         <Navbar />
         {children}
-      </body>
+      </body> */}
+      <body className='flex min-h-[100vh] flex-col'>{children}</body>
     </html>
   );
 }
