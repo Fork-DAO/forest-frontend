@@ -6,9 +6,8 @@ import HeaderMobile from "./HeaderMobile";
 
 const Layout: React.FC<{
   children: ReactNode,
-  setHasConnected: Dispatch<boolean>,
   isMobile: boolean
-}> = ({ children, setHasConnected, isMobile }) => {
+}> = ({ children, isMobile }) => {
   const [windowDefined, setWindowDefined] = useState(false);
 
   useEffect(() => {
@@ -22,7 +21,7 @@ const Layout: React.FC<{
         <link rel="icon" href="/favicon.png" />
       </Head>
       <div style={windowDefined ? {
-        backgroundImage: `url(${image.src})`,
+        backgroundColor: `white`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: isMobile ? "left" : "top",
@@ -32,8 +31,8 @@ const Layout: React.FC<{
         width: '100%',
       } : {}}>
         {isMobile ?
-          <HeaderMobile setHasConnected={setHasConnected} /> :
-          <Header setHasConnected={setHasConnected} />
+          <HeaderMobile /> :
+          <Header  />
         }
         <div className={isMobile ? "pt-10" : "pt-20"}>
           {children}

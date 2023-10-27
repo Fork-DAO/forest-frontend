@@ -1,157 +1,228 @@
 import styled from "@emotion/styled";
-import { OpenInNew } from "@mui/icons-material";
-import { Alert, Button, CircularProgress, Collapse, IconButton, Stack, TextField, Tooltip, Typography } from "@mui/material";
-import { BigNumber, ethers } from "ethers";
+import {  Button,Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { useContractRead, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi";
-import { BLOCK_EXPLORER, NFT_ADDY, WRITE_SAFE_MINT, READ_UNIT_PRICE } from "../constants";
+import { BLOCK_EXPLORER, NFT_ADDY, FORK_TOKEN_ADDY, GOVERNOR_ADDY, SUBMIT_LIST_ABI, WRITE_SAFE_MINT, READ_UNIT_PRICE } from "../constants";
 
 const QuantityTextField = styled(TextField)({
-  'background-color': '#43676e52',
-  '#quantity': {
-    color: '#cdd8c4'
-  },
-  '& input:invalid + fieldset': {
-    borderColor: 'red',
-    borderWidth: 2,
-  },
-  '& input:valid:focus + fieldset': {
-    borderColor: "rgb(67 103 110)",
-    borderLeftWidth: 6,
-    padding: '4px !important',
-  },
-  '& input:valid:hover + fieldset': {
-    borderColor: "rgb(67 103 110)",
-    borderLeftWidth: 6,
-    padding: '4px !important',
-  }
+  'padding': "4px",
+  'color': 'white',
 });
 
-const MintNft: React.FC = () => {
-  const [quantity, setQuantity] = useState<number>();
-  const [showError, setShowError] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(true);
-  const [unitPrice, setUnitPrice] = useState<BigNumber>();
-
-  useContractRead({
-    address: NFT_ADDY,
-    abi: [READ_UNIT_PRICE.abi],
-    functionName: READ_UNIT_PRICE.name,
-    onSuccess(data) {
-      setUnitPrice(BigNumber.from(data))
-    },
-    onError(data) {
-      setShowError(true);
-      console.error('error reading unit price', data)
+const formatData = (addyList: string | undefined, tokenAmountList: string | undefined) => {
+  const tokenAmountAsList = tokenAmountList ? tokenAmountList.split(",") : [];
+  const tokenAmountLength = tokenAmountAsList.length;
+  const addyAsList = addyList ? addyList.split(",") : [];
+  if (tokenAmountLength == 0) {
+    return "";
+  }
+  let data = '0x';
+  for (let index = 0; index < tokenAmountLength; index++) {
+    if (addyAsList.length > 0) {
+      data += 'a9059cbb000000000000000000000000'
+      const addy = addyAsList[index]
+      if (addy.length != 42 || addy.substring(0,2) != '0x') {
+        console.error(`address ${addy} debe empezar con 0x y tener una longitud de 42 caracters`)
+      } else {
+        data += addy.substring(2).toLowerCase()
+        let tokenAmount = Number(tokenAmountAsList[index]);
+        tokenAmount = tokenAmount * (10**8);
+        let tokenAmountHexa = tokenAmount.toString(16);
+        const amountOfZeros = 64-(tokenAmountHexa.length);
+        for (let index_2 = 0; index_2 < amountOfZeros; index_2++) {
+          data += '0';
+        }
+        data += tokenAmountHexa;
+      }
     }
-  });
-  const {
-    config,
-    isError: isPrepareError,
-  } = usePrepareContractWrite({
-    address: NFT_ADDY,
-    abi: [WRITE_SAFE_MINT.abi],
-    functionName: WRITE_SAFE_MINT.name,
-    args: [quantity ? BigNumber.from(quantity) : BigNumber.from(0)],
-    enabled: (quantity || 0) > 0 && Boolean(unitPrice),
-    overrides: {
-      value: quantity ? unitPrice?.mul(quantity) : unitPrice
-    },
-    onError: (e) => {
-      setShowError(true)
-      console.error(`Error armando tx: ${JSON.stringify(e)}`)
-    },
-    onSuccess: () => setShowSuccess(true)
-  });
-  const { data, isError, write } = useContractWrite(config);
+  }
+  return data;
+}
 
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-  });
+const formatDataSize = (addyList: string | undefined) => {
+  const addyAsList = addyList ? addyList.split(",") : [];
+  const addyLength = addyAsList.length;
+  if (addyLength == 0) {
+    return "";
+  }
+  let dataSize = "[";
+  for (let index = 0; index < addyLength; index++) {
+    dataSize += `"68"${index < (addyLength-1) ? "," : ""}`;
+  }
+  dataSize += "]"
+  return dataSize;
+}
+
+const formatValue = (addyList: string | undefined) => {
+  const addyAsList = addyList ? addyList.split(",") : [];
+  const addyLength = addyAsList.length;
+  let value = "[";
+  for (let index = 0; index < addyLength; index++) {
+    value += `"0"${index < (addyLength-1) ? "," : ""}`;
+  }
+  value += "]"
+  return value;
+}
+
+const formatDescription = (fipNumber: string | undefined, addyList: string | undefined) => {
+  if (fipNumber == undefined || fipNumber.length == 0) {
+    return "";
+  }
+  const addyAsList = addyList ? addyList.split(",") : [];
+  const addyLength = addyAsList.length;
+  let description = "";
+  for (let index = 0; index < addyLength; index++) {
+    description += `Enforce FIP ${fipNumber}${index < (addyLength-1) ? "," : ""}`;
+  }
+  return description;
+}
+
+const formatTarget = (addyList: string | undefined) => {
+  const addyAsList = addyList ? addyList.split(",") : [];
+  const addyLength = addyAsList.length;
+  let target = "[";
+  for (let index = 0; index < addyLength; index++) {
+    target += `"${FORK_TOKEN_ADDY}"${index < (addyLength-1) ? "," : ""}`;
+  }
+  target += "]"
+  return target;
+}
+
+const MintNft: React.FC = () => {
+  const [target, setTarget] = useState<string>();
+  const [value, setValue] = useState<string>();
+  const [submitListData, setSubmitListData] = useState<string>();
+  const [dataSize, setDataSize] = useState<string>();
+  const [description, setDescription] = useState<string>();
+  const [fipNumber, setFipNumber] = useState<string>();
+  const [addyList, setAddyList] = useState<string>();
+  const [tokenAmountList, setTokenAmountList] = useState<string>();
+  const [showAirdropData, setShowAirdropData] = useState<boolean>(false);
 
   return (
-    <Stack className="flex items-center" >
-      <div>
-        <QuantityTextField
-          id="quantity"
+    <div className="flex items-center row">
+        <Stack className="flex items-center row" >
+          <Typography variant="h6">
+          Para airdrop
+            </Typography>
+      <QuantityTextField
+          fullWidth
+          id="fipNumber"
+          multiline
+          label="Numero de FIP"
           variant="outlined"
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          type="number"
-          value={quantity}
+          onChange={(e) => {
+            setFipNumber(e.target.value)
+            setDescription(formatDescription(e.target.value, addyList))
+          }}
+          value={fipNumber}
+          size="medium"
+      />
+        <QuantityTextField
+          id="addyList"
+          multiline
+          label="Lista de Addresses"
+          variant="outlined"
+          onChange={(e) => {
+            setAddyList(e.target.value)
+            setTarget(formatTarget(e.target.value))
+            setValue(formatValue(e.target.value))
+            setSubmitListData(formatData(e.target.value, tokenAmountList))
+            setDataSize(formatDataSize(e.target.value))
+            setDescription(formatDescription(fipNumber, e.target.value))
+          }}
+          value={addyList}
           size="small"
-          disabled={isLoading}
         />
-        {isLoading ? <CircularProgress className="ml-2" /> :
-          <Tooltip title={unitPrice && quantity ? `Total ${ethers.utils.formatEther(unitPrice.mul(quantity))} MATIC` : ""}>
-            <Button
-              variant="outlined"
-              size="large"
-              disabled={!quantity || !unitPrice || isLoading}
-              onClick={(e) => {
-                e.preventDefault()
-                write?.()
-              }}
-              style={{ background: "rgb(67 103 110)" }}
-            >
-              <Typography color="#cdd8c4">
-                Mintear
-              </Typography>
-            </Button>
-          </Tooltip>
+        <QuantityTextField
+          id="tokenQuantityList"
+          multiline
+          label="Lista con cantidad de Tokens"
+          variant="outlined"
+          onChange={(e) => {
+            setTokenAmountList(e.target.value)
+            setAddyList(addyList)
+            setTarget(formatTarget(addyList))
+            setValue(formatValue(addyList))
+            setSubmitListData(formatData(addyList, e.target.value))
+            setDataSize(formatDataSize(addyList))
+            setDescription(formatDescription(fipNumber, addyList))
+          }}
+          value={tokenAmountList}
+          size="small"
+        />
+        <Button 
+        variant="outlined"
+        className="m-5"
+        onClick={(e) => setShowAirdropData(true)}>
+          Crear datos de la transa
+        </Button>
+        </Stack>
+        {
+          showAirdropData ? 
+          (
+            <Stack 
+          className="flex items-center row p-10">
+        Datos pa la transa
+        <QuantityTextField
+          fullWidth
+          id="contractTarget"
+          multiline
+          variant="filled"
+          label="contractTarget"
+          disabled
+          value={target}
+          size="medium"
+      />
+      <QuantityTextField
+          fullWidth
+          id="contractValue"
+          multiline
+          variant="filled"
+          label="contractValue"
+          disabled
+          value={value}
+          size="medium"
+      />
+      <QuantityTextField
+          fullWidth
+          id="contractData"
+          multiline
+          variant="filled"
+          label="contractData"
+          disabled
+          value={submitListData}
+          size="medium"
+      />
+      <QuantityTextField
+          fullWidth
+          id="contractDataSize"
+          variant="filled"
+          multiline
+          label="contractDataSize"
+          disabled
+          value={dataSize}
+          size="medium"
+      />
+      <QuantityTextField
+          fullWidth
+          variant="filled"
+          id="contractDescription"
+          multiline
+          label="contractDescription"
+          disabled
+          value={description}
+          size="medium"
+      />
+        </Stack>
+          )
+          :
+          <div/>
         }
-        {isSuccess && (
-          <Collapse in={showSuccess}>
-            <Alert
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setShowSuccess(false);
-                  }}
-                >
-                  <div className="text-xs font-bold">
-                    x
-                  </div>
-                </IconButton>
-              }
-              severity="success"
-              className="m-2">
-              {`¡Minteo exitoso! `}
-              <a href={`${BLOCK_EXPLORER.url}/tx/${data?.hash}`}>
-                <OpenInNew fontSize="inherit" />
-              </a>
-            </Alert>
-          </Collapse>
-        )}
+        
       </div>
-      <div>
-        {(isPrepareError || isError) && (
-          <Collapse in={showError}>
-            <Alert
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setShowError(false);
-                  }}
-                >
-                  <div className="text-xs font-bold">
-                    x
-                  </div>
-                </IconButton>
-              }
-              severity="error"
-              className="m-2">
-              {"Error para ejecutar la transacción. Contacte al admin."}
-            </Alert>
-          </Collapse>
-        )}
-      </div>
-    </Stack>
+      
+        
+        
   )
 }
 
